@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relógio OneUI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-theme">
+    <div class="container">
+        <header>
+            <div class="theme-toggle">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun active"></i>
+            </div>
+        </header>
+
+        <main>
+            <!-- Relógio Analógico -->
+            <section class="clock-section" id="analog-clock-section">
+                <div class="analog-clock">
+                    <div class="clock-face">
+                        <div class="marking marking-12"></div>
+                        <div class="marking marking-3"></div>
+                        <div class="marking marking-6"></div>
+                        <div class="marking marking-9"></div>
+                        <div class="hour-hand"></div>
+                        <div class="minute-hand"></div>
+                        <div class="second-hand"></div>
+                        <div class="center-point"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Relógio Digital -->
+            <section class="clock-section" id="digital-clock-section">
+                <div class="digital-clock">
+                    <div class="time">00:00:00</div>
+                    <div class="date">Segunda, 1 de Janeiro</div>
+                    <div class="weather">
+                        <i class="fas fa-cloud-sun"></i>
+                        <span>25°C</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cronômetro -->
+            <section class="clock-section hidden" id="stopwatch-section">
+                <div class="stopwatch">
+                    <div class="stopwatch-display">00:00:00</div>
+                    <div class="controls">
+                        <button class="control-btn" id="stopwatch-start">Iniciar</button>
+                        <button class="control-btn" id="stopwatch-pause">Pausar</button>
+                        <button class="control-btn" id="stopwatch-reset">Resetar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Temporizador -->
+            <section class="clock-section hidden" id="timer-section">
+                <div class="timer">
+                    <div class="timer-display">
+                        <input type="number" id="hours" min="0" max="23" value="0">
+                        <span>:</span>
+                        <input type="number" id="minutes" min="0" max="59" value="0">
+                        <span>:</span>
+                        <input type="number" id="seconds" min="0" max="59" value="0">
+                    </div>
+                    <div class="timer-progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <div class="controls">
+                        <button class="control-btn" id="timer-start">Iniciar</button>
+                        <button class="control-btn" id="timer-pause">Pausar</button>
+                        <button class="control-btn" id="timer-reset">Resetar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alarmes -->
+            <section class="clock-section hidden" id="alarm-section">
+                <div class="alarm">
+                    <div class="alarm-list">
+                        <div class="no-alarms">Nenhum alarme definido</div>
+                    </div>
+                    <button class="add-alarm-btn">
+                        <i class="fas fa-plus"></i> Adicionar Alarme
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-section="digital-clock-section">
+                <i class="fas fa-clock"></i>
+                <span>Relógio</span>
+            </button>
+            <button class="nav-btn" data-section="stopwatch-section">
+                <i class="fas fa-stopwatch"></i>
+                <span>Cronômetro</span>
+            </button>
+            <button class="nav-btn" data-section="timer-section">
+                <i class="fas fa-hourglass-half"></i>
+                <span>Temporizador</span>
+            </button>
+            <button class="nav-btn" data-section="alarm-section">
+                <i class="fas fa-bell"></i>
+                <span>Alarmes</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Modal para adicionar alarme -->
+    <div class="modal" id="alarm-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Adicionar Alarme</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="time-picker">
+                    <input type="number" id="alarm-hours" min="0" max="23" value="7">
+                    <span>:</span>
+                    <input type="number" id="alarm-minutes" min="0" max="59" value="0">
+                </div>
+                <div class="days-selector">
+                    <button class="day-btn" data-day="0">D</button>
+                    <button class="day-btn" data-day="1">S</button>
+                    <button class="day-btn" data-day="2">T</button>
+                    <button class="day-btn" data-day="3">Q</button>
+                    <button class="day-btn" data-day="4">Q</button>
+                    <button class="day-btn" data-day="5">S</button>
+                    <button class="day-btn" data-day="6">S</button>
+                </div>
+                <div class="alarm-label">
+                    <input type="text" id="alarm-label" placeholder="Nome do alarme">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="save-alarm">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/themes.js"></script>
+    <script src="js/clock.js"></script>
+    <script src="js/stopwatch.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/alarm.js"></script>
+    <script src="js/navigation.js"></script>
+</body>
+</html>
