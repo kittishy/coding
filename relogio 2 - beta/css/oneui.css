@@ -1,0 +1,703 @@
+/* Estilos para o redesign baseado no Samsung OneUI */
+
+:root {
+    --oneui-primary: #5e7ce2;
+    --oneui-primary-dark: #4a67c7;
+    --oneui-background: #f5f6fa;
+    --oneui-card: #ffffff;
+    --oneui-text: #2d3436;
+    --oneui-text-secondary: #636e72;
+    --oneui-border: #e0e0e0;
+    --oneui-success: #4cd964;
+    --oneui-danger: #ff3b30;
+    --oneui-warning: #ffcc00;
+    --oneui-info: #34aadc;
+    --oneui-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --oneui-radius: 20px;
+    --oneui-transition: 0.3s;
+}
+
+body.dark-theme {
+    --oneui-background: #1e272e;
+    --oneui-card: #2d3436;
+    --oneui-text: #f5f6fa;
+    --oneui-text-secondary: #a4b0be;
+    --oneui-border: #3d4852;
+}
+
+/* Estilos gerais */
+body {
+    background-color: var(--oneui-background);
+    color: var(--oneui-text);
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    background-color: var(--oneui-background);
+    border-radius: var(--oneui-radius);
+    box-shadow: var(--oneui-shadow);
+}
+
+/* Alarmes redesenhados */
+.alarm {
+    background-color: var(--oneui-card);
+    border-radius: var(--oneui-radius);
+    padding: 20px;
+    box-shadow: var(--oneui-shadow);
+}
+
+.alarm-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: var(--oneui-card);
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform var(--oneui-transition);
+}
+
+.alarm-item:hover {
+    transform: translateY(-2px);
+}
+
+.alarm-info {
+    flex: 1;
+}
+
+.alarm-time {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--oneui-text);
+    margin-bottom: 5px;
+}
+
+.alarm-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.alarm-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--oneui-text);
+}
+
+.alarm-days, .alarm-sound {
+    font-size: 0.9rem;
+    color: var(--oneui-text-secondary);
+}
+
+.alarm-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Switch toggle */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--oneui-border);
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--oneui-primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Botões de ação */
+.edit-alarm, .delete-alarm {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--oneui-text-secondary);
+    transition: color var(--oneui-transition);
+}
+
+.edit-alarm:hover {
+    color: var(--oneui-primary);
+}
+
+.delete-alarm:hover {
+    color: var(--oneui-danger);
+}
+
+/* Modal de alarme */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity var(--oneui-transition);
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--oneui-card);
+    border-radius: var(--oneui-radius);
+    width: 90%;
+    max-width: 400px;
+    box-shadow: var(--oneui-shadow);
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--oneui-border);
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--oneui-text);
+    font-weight: 500;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--oneui-text-secondary);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--oneui-border);
+    text-align: right;
+}
+
+/* Seletor de som */
+.sound-selector {
+    margin-top: 20px;
+}
+
+.sound-selector label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--oneui-text);
+    font-weight: 500;
+}
+
+.alarm-sound-select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--oneui-border);
+    background-color: var(--oneui-card);
+    color: var(--oneui-text);
+    margin-bottom: 10px;
+}
+
+.test-sound-btn {
+    background-color: var(--oneui-primary);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color var(--oneui-transition);
+}
+
+.test-sound-btn:hover {
+    background-color: var(--oneui-primary-dark);
+}
+
+/* Toast notification */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: var(--oneui-card);
+    color: var(--oneui-text);
+    padding: 12px 20px;
+    border-radius: 10px;
+    box-shadow: var(--oneui-shadow);
+    z-index: 1000;
+    opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.toast-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Notificação de alarme */
+.alarm-notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.alarm-notification-content {
+    background-color: var(--oneui-card);
+    border-radius: var(--oneui-radius);
+    padding: 30px;
+    text-align: center;
+    box-shadow: var(--oneui-shadow);
+    max-width: 320px;
+    width: 90%;
+}
+
+.alarm-notification h3 {
+    margin-top: 0;
+    color: var(--oneui-primary);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.alarm-notification .alarm-label {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.alarm-notification .alarm-time {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.alarm-notification .alarm-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.snooze-alarm, .dismiss-alarm {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color var(--oneui-transition);
+}
+
+.snooze-alarm {
+    background-color: var(--oneui-border);
+    color: var(--oneui-text);
+}
+
+.dismiss-alarm {
+    background-color: var(--oneui-primary);
+    color: white;
+}
+
+.snooze-alarm:hover {
+    background-color: var(--oneui-text-secondary);
+    color: white;
+}
+
+.dismiss-alarm:hover {
+    background-color: var(--oneui-primary-dark);
+}
+
+/* Relógio Mundial */
+.worldclock {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: var(--oneui-radius);
+    background-color: var(--oneui-card);
+    box-shadow: var(--oneui-shadow);
+}
+
+.worldclock h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--oneui-text);
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.worldclock-list {
+    margin-bottom: 20px;
+}
+
+.worldclock-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: var(--oneui-card);
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.worldclock-info {
+    flex: 1;
+}
+
+.worldclock-city {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--oneui-text);
+    margin-bottom: 5px;
+}
+
+.worldclock-diff {
+    font-size: 0.9rem;
+    color: var(--oneui-text-secondary);
+}
+
+.worldclock-time {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--oneui-text);
+    margin-right: 15px;
+}
+
+.delete-worldclock {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--oneui-text-secondary);
+    transition: color var(--oneui-transition);
+}
+
+.delete-worldclock:hover {
+    color: var(--oneui-danger);
+}
+
+.no-worldclocks {
+    text-align: center;
+    padding: 20px;
+    color: var(--oneui-text-secondary);
+    display: none;
+}
+
+.add-worldclock-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--oneui-primary);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color var(--oneui-transition);
+}
+
+.add-worldclock-btn:hover {
+    background-color: var(--oneui-primary-dark);
+}
+
+/* Modal de relógio mundial */
+.city-search {
+    margin-bottom: 15px;
+}
+
+.city-search input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--oneui-border);
+    background-color: var(--oneui-card);
+    color: var(--oneui-text);
+}
+
+.city-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.city-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid var(--oneui-border);
+    cursor: pointer;
+    transition: background-color var(--oneui-transition);
+}
+
+.city-item:hover {
+    background-color: rgba(94, 124, 226, 0.1);
+}
+
+.city-name {
+    font-weight: 500;
+    color: var(--oneui-text);
+}
+
+.city-time {
+    color: var(--oneui-text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Modo de rotina para dormir/acordar */
+.bedtime {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: var(--oneui-radius);
+    background-color: var(--oneui-card);
+    box-shadow: var(--oneui-shadow);
+}
+
+.bedtime-schedule {
+    background-color: rgba(94, 124, 226, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.bedtime-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--oneui-text);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bedtime-title i {
+    color: var(--oneui-primary);
+}
+
+.bedtime-times {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.bedtime-time {
+    text-align: center;
+}
+
+.bedtime-time-label {
+    font-size: 0.9rem;
+    color: var(--oneui-text-secondary);
+    margin-bottom: 5px;
+}
+
+.bedtime-time-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--oneui-text);
+}
+
+.bedtime-info {
+    font-size: 0.9rem;
+    color: var(--oneui-text-secondary);
+    text-align: center;
+}
+
+.bedtime-activity {
+    margin-top: 30px;
+}
+
+.bedtime-activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.bedtime-activity-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--oneui-text);
+}
+
+.bedtime-activity-actions {
+    color: var(--oneui-text-secondary);
+    font-size: 1.2rem;
+}
+
+.bedtime-graph {
+    height: 100px;
+    background-color: rgba(94, 124, 226, 0.1);
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.bedtime-graph-bar {
+    position: absolute;
+    bottom: 0;
+    width: 8px;
+    background-color: var(--oneui-primary);
+    border-radius: 4px 4px 0 0;
+}
+
+.bedtime-graph-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--oneui-text-secondary);
+}
+
+.bedtime-sounds {
+    margin-top: 30px;
+}
+
+.bedtime-sounds-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--oneui-text);
+    margin-bottom: 15px;
+}
+
+.bedtime-sound-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background-color: rgba(94, 124, 226, 0.1);
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.bedtime-sound-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: var(--oneui-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.bedtime-sound-info {
+    flex: 1;
+}
+
+.bedtime-sound-name {
+    font-weight: 500;
+    color: var(--oneui-text);
+    margin-bottom: 5px;
+}
+
+.bedtime-sound-source {
+    font-size: 0.9rem;
+    color: var(--oneui-text-secondary);
+}
+
+.bedtime-sound-play {
+    color: var(--oneui-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.choose-sound-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    color: var(--oneui-primary);
+    border: 1px solid var(--oneui-primary);
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color var(--oneui-transition);
+}
+
+.choose-sound-btn:hover {
+    background-color: rgba(94, 124, 226, 0.1);
+}
+
+/* Botão de navegação para relógio mundial */
+.bottom-nav .nav-btn[data-section="worldclock-section"] i {
+    font-size: 1.3rem;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+    }
+    
+    .alarm-notification-content {
+        width: 95%;
+    }
+    
+    .alarm-time {
+        font-size: 1.8rem;
+    }
+    
+    .worldclock-time {
+        font-size: 1.5rem;
+    }
+}

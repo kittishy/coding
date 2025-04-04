@@ -1,0 +1,734 @@
+/* Estilos Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+:root {
+    --transition-speed: 0.3s;
+    --border-radius: 20px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    max-height: 900px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+/* Header */
+header {
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    position: relative;
+    width: 60px;
+    height: 30px;
+    background-color: var(--toggle-bg);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    transition: background-color var(--transition-speed);
+}
+
+.theme-toggle i {
+    font-size: 16px;
+    color: var(--toggle-icon);
+    opacity: 0.5;
+    transition: opacity var(--transition-speed);
+}
+
+.theme-toggle i.active {
+    opacity: 1;
+}
+
+.theme-toggle::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: var(--toggle-handle);
+    border-radius: 50%;
+    left: 3px;
+    transition: transform var(--transition-speed);
+}
+
+body.dark-theme .theme-toggle::after {
+    transform: translateX(30px);
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.clock-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Oculta permanentemente o relógio analógico */
+#analog-clock-section {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.clock-section {
+    align-items: center;
+    padding: 20px;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.clock-section.hidden {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Analog Clock */
+.analog-clock {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background-color: var(--clock-face-bg);
+    box-shadow: var(--shadow);
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.clock-face {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+}
+
+.marking {
+    position: absolute;
+    width: 4px;
+    height: 12px;
+    background-color: var(--clock-marking);
+    top: 50%;
+    left: 50%;
+    transform-origin: 50% 0;
+}
+
+.marking-12 {
+    transform: translateX(-50%) translateY(-100%) rotate(0deg);
+}
+
+.marking-3 {
+    transform: translateX(-50%) translateY(-100%) rotate(90deg);
+}
+
+.marking-6 {
+    transform: translateX(-50%) translateY(-100%) rotate(180deg);
+}
+
+.marking-9 {
+    transform: translateX(-50%) translateY(-100%) rotate(270deg);
+}
+
+.hour-hand, .minute-hand, .second-hand {
+    position: absolute;
+    transform-origin: bottom center;
+    bottom: 50%;
+    left: 50%;
+    border-radius: 10px;
+}
+
+.hour-hand {
+    width: 6px;
+    height: 60px;
+    background-color: var(--hour-hand);
+    transform: translateX(-50%);
+}
+
+.minute-hand {
+    width: 4px;
+    height: 90px;
+    background-color: var(--minute-hand);
+    transform: translateX(-50%);
+}
+
+.second-hand {
+    width: 2px;
+    height: 100px;
+    background-color: var(--second-hand);
+    transform: translateX(-50%);
+}
+
+.center-point {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--center-point);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Digital Clock */
+.digital-clock {
+    text-align: center;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    background-color: var(--digital-bg);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 320px;
+}
+
+.time {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--digital-time);
+    margin-bottom: 10px;
+}
+
+.date {
+    font-size: 1.2rem;
+    color: var(--digital-date);
+    margin-bottom: 15px;
+}
+
+.weather {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--digital-weather);
+}
+
+.weather i {
+    margin-right: 10px;
+}
+
+/* Stopwatch */
+.stopwatch {
+    text-align: center;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    background-color: var(--feature-bg);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 320px;
+}
+
+.stopwatch-display {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--feature-text);
+    margin-bottom: 30px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Timer */
+.timer {
+    text-align: center;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    background-color: var(--feature-bg);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 320px;
+}
+
+.timer-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--feature-text);
+    margin-bottom: 20px;
+}
+
+.timer-display input {
+    width: 70px;
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.timer-display input::-webkit-outer-spin-button,
+.timer-display input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.timer-display span {
+    margin: 0 5px;
+}
+
+.timer-progress {
+    height: 6px;
+    background-color: var(--progress-bg);
+    border-radius: 3px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: var(--progress-fill);
+    transition: width 1s linear;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.control-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform 0.1s;
+}
+
+.control-btn:hover {
+    background-color: var(--btn-hover);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+/* Alarm */
+.alarm {
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    background-color: var(--feature-bg);
+    box-shadow: var(--shadow);
+}
+
+/* Notificação de Alarme */
+.alarm-notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.alarm-notification-content {
+    background-color: var(--modal-bg);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    width: 90%;
+}
+
+.alarm-notification h3 {
+    margin-top: 0;
+    color: var(--btn-primary);
+}
+
+.dismiss-alarm {
+    background-color: var(--btn-primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.dismiss-alarm:hover {
+    background-color: var(--btn-primary-hover);
+}
+
+.alarm-list {
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.no-alarms {
+    text-align: center;
+    color: var(--feature-text-secondary);
+    padding: 20px 0;
+}
+
+.alarm-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: var(--alarm-item-bg);
+    border-radius: 15px;
+    transition: background-color var(--transition-speed);
+}
+
+.alarm-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.alarm-time {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--feature-text);
+}
+
+.alarm-days {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.alarm-day {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    border-radius: 50%;
+    background-color: var(--day-inactive);
+    color: var(--day-inactive-text);
+}
+
+.alarm-day.active {
+    background-color: var(--day-active);
+    color: var(--day-active-text);
+}
+
+.alarm-toggle {
+    position: relative;
+    width: 50px;
+    height: 26px;
+    background-color: var(--toggle-bg);
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+.alarm-toggle::after {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background-color: var(--toggle-handle);
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform var(--transition-speed);
+}
+
+.alarm-toggle.active {
+    background-color: var(--toggle-active);
+}
+
+.alarm-toggle.active::after {
+    transform: translateX(24px);
+}
+
+.add-alarm-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: background-color var(--transition-speed), transform 0.1s;
+}
+
+.add-alarm-btn:hover {
+    background-color: var(--btn-hover);
+}
+
+.add-alarm-btn:active {
+    transform: scale(0.98);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed), visibility var(--transition-speed);
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 350px;
+    background-color: var(--modal-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: transform var(--transition-speed);
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+    color: var(--modal-title);
+    font-weight: 500;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--modal-close);
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.time-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.time-picker input {
+    width: 70px;
+    height: 60px;
+    background-color: var(--input-bg);
+    border: none;
+    border-radius: 10px;
+    color: var(--input-text);
+    font-size: 2rem;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.time-picker input::-webkit-outer-spin-button,
+.time-picker input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.time-picker span {
+    margin: 0 10px;
+    font-size: 2rem;
+    color: var(--input-text);
+}
+
+.days-selector {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.day-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--day-inactive);
+    color: var(--day-inactive-text);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.day-btn.active {
+    background-color: var(--day-active);
+    color: var(--day-active-text);
+}
+
+.alarm-label input {
+    width: 100%;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    font-size: 1rem;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid var(--border-color);
+}
+
+.save-alarm {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: var(--btn-primary);
+    color: var(--btn-primary-text);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform 0.1s;
+}
+
+.save-alarm:hover {
+    background-color: var(--btn-primary-hover);
+}
+
+.save-alarm:active {
+    transform: scale(0.95);
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    background-color: var(--nav-bg);
+    border-top: 1px solid var(--border-color);
+}
+
+.nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    color: var(--nav-inactive);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: color var(--transition-speed);
+}
+
+.nav-btn i {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.nav-btn.active {
+    color: var(--nav-active);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .container {
+        height: 100vh;
+        max-height: none;
+        border-radius: 0;
+    }
+    
+    .analog-clock {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .time {
+        font-size: 3rem;
+    }
+    
+    .stopwatch-display, .timer-display {
+        font-size: 2.5rem;
+    }
+    
+    .timer-display input {
+        width: 60px;
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.alarm-active {
+    animation: pulse 1s infinite;
+}

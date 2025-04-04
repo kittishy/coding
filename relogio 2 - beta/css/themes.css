@@ -1,0 +1,124 @@
+/* Temas para o Relógio OneUI */
+
+/* Tema Claro (Padrão) */
+body.light-theme {
+    background-color: #f5f6fa;
+    color: #2d3436;
+    
+    /* Variáveis de Cores */
+    --toggle-bg: #e0e0e0;
+    --toggle-handle: #ffffff;
+    --toggle-icon: #2d3436;
+    --toggle-active: #5e7ce2;
+    
+    --clock-face-bg: #ffffff;
+    --clock-marking: #2d3436;
+    --hour-hand: #2d3436;
+    --minute-hand: #2d3436;
+    --second-hand: #5e7ce2;
+    --center-point: #5e7ce2;
+    
+    --digital-bg: #ffffff;
+    --digital-time: #2d3436;
+    --digital-date: #636e72;
+    --digital-weather: #2d3436;
+    
+    --feature-bg: #ffffff;
+    --feature-text: #2d3436;
+    --feature-text-secondary: #636e72;
+    
+    --progress-bg: #e0e0e0;
+    --progress-fill: #5e7ce2;
+    
+    --btn-bg: #f0f0f0;
+    --btn-text: #2d3436;
+    --btn-hover: #e0e0e0;
+    --btn-primary: #5e7ce2;
+    --btn-primary-text: #ffffff;
+    --btn-primary-hover: #4a67c7;
+    
+    --alarm-item-bg: #f0f0f0;
+    
+    --day-inactive: #e0e0e0;
+    --day-inactive-text: #636e72;
+    --day-active: #5e7ce2;
+    --day-active-text: #ffffff;
+    
+    --modal-bg: #ffffff;
+    --modal-title: #2d3436;
+    --modal-close: #636e72;
+    --input-bg: #f0f0f0;
+    --input-text: #2d3436;
+    
+    --nav-bg: #ffffff;
+    --nav-active: #5e7ce2;
+    --nav-inactive: #636e72;
+    
+    --border-color: #e0e0e0;
+}
+
+/* Tema Escuro */
+body.dark-theme {
+    background-color: #1e272e;
+    color: #f5f6fa;
+    
+    /* Variáveis de Cores */
+    --toggle-bg: #2d3436;
+    --toggle-handle: #5e7ce2;
+    --toggle-icon: #f5f6fa;
+    --toggle-active: #5e7ce2;
+    
+    --clock-face-bg: #2d3436;
+    --clock-marking: #f5f6fa;
+    --hour-hand: #f5f6fa;
+    --minute-hand: #f5f6fa;
+    --second-hand: #5e7ce2;
+    --center-point: #5e7ce2;
+    
+    --digital-bg: #2d3436;
+    --digital-time: #f5f6fa;
+    --digital-date: #a4b0be;
+    --digital-weather: #f5f6fa;
+    
+    --feature-bg: #2d3436;
+    --feature-text: #f5f6fa;
+    --feature-text-secondary: #a4b0be;
+    
+    --progress-bg: #1e272e;
+    --progress-fill: #5e7ce2;
+    
+    --btn-bg: #3d4852;
+    --btn-text: #f5f6fa;
+    --btn-hover: #4a5864;
+    --btn-primary: #5e7ce2;
+    --btn-primary-text: #ffffff;
+    --btn-primary-hover: #4a67c7;
+    
+    --alarm-item-bg: #3d4852;
+    
+    --day-inactive: #3d4852;
+    --day-inactive-text: #a4b0be;
+    --day-active: #5e7ce2;
+    --day-active-text: #ffffff;
+    
+    --modal-bg: #2d3436;
+    --modal-title: #f5f6fa;
+    --modal-close: #a4b0be;
+    --input-bg: #3d4852;
+    --input-text: #f5f6fa;
+    
+    --nav-bg: #2d3436;
+    --nav-active: #5e7ce2;
+    --nav-inactive: #a4b0be;
+    
+    --border-color: #3d4852;
+}
+
+/* Transições para Mudança de Tema */
+body, .theme-toggle, .theme-toggle i, .theme-toggle::after,
+.clock-section, .control-btn, .alarm-item, .alarm-toggle::after,
+.add-alarm-btn, .modal, .modal-content, .day-btn, .nav-btn {
+    transition-property: background-color, color, transform, opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
