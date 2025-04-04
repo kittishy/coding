@@ -1,0 +1,325 @@
+/* 
+ * animations.css
+ * Animações para o Relógio Completo Inspirado no macOS
+ */
+
+/* Animação de fade in para elementos que aparecem na tela */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Animação de fade out para elementos que saem da tela */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Animação para o pulso do segundos */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Animação para a transição entre temas (claro/escuro) */
+@keyframes themeTransition {
+    0% {
+        filter: brightness(1) contrast(1);
+    }
+    50% {
+        filter: brightness(1.1) contrast(0.9);
+    }
+    100% {
+        filter: brightness(1) contrast(1);
+    }
+}
+
+/* Animação para o relógio digital (números mudando) */
+@keyframes numberChange {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-2px) scale(1.02);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animação para o alarme tocando */
+@keyframes alarm {
+    0% {
+        transform: rotate(-2deg);
+    }
+    25% {
+        transform: rotate(2deg);
+    }
+    50% {
+        transform: rotate(-2deg);
+    }
+    75% {
+        transform: rotate(2deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* Animação de bounce para botões quando pressionados */
+@keyframes buttonPress {
+    0% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Animação para o aparecimento de modais */
+@keyframes modalAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animação para o desaparecimento de modais */
+@keyframes modalDisappear {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.98);
+    }
+}
+
+/* Animação para o efeito de hover em botões */
+@keyframes buttonHover {
+    0% {
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    100% {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+}
+
+/* Animação para o movimento de arrasto (drag) */
+@keyframes grabCursor {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0.98);
+    }
+}
+
+/* Animação para o cursor de carregamento */
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animação para a notificação do temporizador pomodoro */
+@keyframes pomodoroNotification {
+    0% {
+        background-color: transparent;
+    }
+    25% {
+        background-color: rgba(255, 99, 71, 0.2);
+    }
+    75% {
+        background-color: rgba(255, 99, 71, 0.2);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* Animação para o calendário mudando de mês */
+@keyframes monthChange {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    45% {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    55% {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Animação para destacar o dia atual no calendário */
+@keyframes currentDayPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.5);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.3);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.5);
+    }
+}
+
+/* Animação para o widget de clima */
+@keyframes weatherAnimation {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Aplicando as animações às classes */
+
+.fade-in {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+.pulse {
+    animation: pulse 1s infinite;
+}
+
+.theme-transition {
+    animation: themeTransition 0.5s ease;
+}
+
+.number-change {
+    animation: numberChange 0.3s ease;
+}
+
+.alarm-active {
+    animation: alarm 0.2s ease infinite;
+}
+
+.button-press {
+    animation: buttonPress 0.3s ease;
+}
+
+.modal-appear {
+    animation: modalAppear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-disappear {
+    animation: modalDisappear 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.button-hover {
+    transition: all 0.2s ease;
+}
+
+.button-hover:hover {
+    animation: buttonHover 0.2s ease forwards;
+}
+
+.dragging {
+    animation: grabCursor 0.1s ease forwards;
+    cursor: grabbing;
+}
+
+.loading {
+    animation: loading 1s linear infinite;
+}
+
+.pomodoro-notification {
+    animation: pomodoroNotification 2s ease infinite;
+}
+
+.month-change {
+    animation: monthChange 0.5s ease;
+}
+
+.current-day {
+    animation: currentDayPulse 2s ease infinite;
+}
+
+.weather-widget {
+    animation: weatherAnimation 3s ease infinite;
+}
+
+/* Transições suaves para elementos interativos */
+.clock-container,
+.clock-display,
+.stopwatch-display,
+.timer-display,
+.alarm-display,
+.calendar-container,
+.pomodoro-container,
+.weather-container {
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Transição para a mudança de tema (modo claro/escuro) */
+body,
+.app-container,
+.clock-panel,
+.controls,
+button,
+input,
+select {
+    transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Efeito de vidro fosco (frosted glass) para elementos flutuantes */
+.floating-panel {
+    transition: backdrop-filter 0.5s ease, background-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Animação para o arrastar e soltar (drag and drop) */
+.draggable {
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.1s ease;
+}
+
+.draggable:active {
+    cursor: grabbing;
+    transform: scale(0.98);
+}

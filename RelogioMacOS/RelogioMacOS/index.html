@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relógio macOS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/oneui.css">
+    <link rel="stylesheet" href="css/effects.css">
+    <!-- Adicione a fonte San Francisco ou similar -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-theme oneui-theme">
+    <div class="container" id="clock-container">
+        <!-- Barra de título estilo macOS -->
+        <div class="titlebar">
+            <div class="titlebar-controls oneui-controls">
+                <div class="control close"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+            </div>
+            <div class="titlebar-title">Relógio</div>
+            <div class="titlebar-menu">
+                <div class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navegação principal -->
+        <div class="nav-container">
+            <nav class="main-nav">
+                <button class="nav-btn active" data-view="clock">
+                    <i class="fas fa-clock"></i>
+                    <span>Relógio</span>
+                </button>
+                <button class="nav-btn" data-view="alarm">
+                    <i class="fas fa-bell"></i>
+                    <span>Alarme</span>
+                </button>
+                <button class="nav-btn" data-view="stopwatch">
+                    <i class="fas fa-stopwatch"></i>
+                    <span>Cronômetro</span>
+                </button>
+                <button class="nav-btn" data-view="timer">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span>Timer</span>
+                </button>
+                <button class="nav-btn" data-view="pomodoro">
+                    <i class="fas fa-circle-dot"></i>
+                    <span>Pomodoro</span>
+                </button>
+                <button class="nav-btn" data-view="calendar">
+                    <i class="fas fa-calendar"></i>
+                    <span>Calendário</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Conteúdo principal com todas as views -->
+        <div class="content-container">
+            <!-- Relógio -->
+            <div class="view active" id="clock-view">
+                <div class="clock-display">
+                    <div class="time">00:00:00</div>
+                    <div class="milliseconds">000</div>
+                    <div class="date">Segunda-feira, 1 de Janeiro de 2023</div>
+                    <div class="timezone">Fuso horário: UTC+0</div>
+                </div>
+                <div class="clock-options">
+                    <button id="toggle-format" class="option-btn">
+                        <i class="fas fa-sync"></i>
+                        <span>12h/24h</span>
+                    </button>
+                    <button id="toggle-seconds" class="option-btn">
+                        <i class="fas fa-eye"></i>
+                        <span>Segundos</span>
+                    </button>
+                    <button id="open-timezone-modal" class="option-btn">
+                        <i class="fas fa-globe"></i>
+                        <span>Fuso Horário</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Alarme -->
+            <div class="view" id="alarm-view">
+                <div class="alarms-list" id="alarms-list">
+                    <!-- Alarmes serão adicionados dinamicamente aqui -->
+                    <div class="empty-state">
+                        <i class="fas fa-bell"></i>
+                        <p>Nenhum alarme configurado</p>
+                    </div>
+                </div>
+                <button id="add-alarm" class="action-btn">
+                    <i class="fas fa-plus"></i>
+                    Adicionar Alarme
+                </button>
+            </div>
+
+            <!-- Cronômetro -->
+            <div class="view" id="stopwatch-view">
+                <div class="stopwatch-display">
+                    <div class="time">00:00:00</div>
+                    <div class="milliseconds">000</div>
+                </div>
+                <div class="stopwatch-controls">
+                    <button id="stopwatch-start" class="control-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button id="stopwatch-lap" class="control-btn" disabled>
+                        <i class="fas fa-flag"></i>
+                    </button>
+                    <button id="stopwatch-reset" class="control-btn" disabled>
+                        <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+                <div class="laps-list" id="laps-list">
+                    <!-- Laps serão adicionados dinamicamente aqui -->
+                </div>
+            </div>
+
+            <!-- Timer -->
+            <div class="view" id="timer-view">
+                <div class="timer-display">
+                    <div class="time-input">
+                        <div class="time-segment">
+                            <input type="number" id="hours" min="0" max="23" value="0">
+                            <label>Horas</label>
+                        </div>
+                        <div class="time-separator">:</div>
+                        <div class="time-segment">
+                            <input type="number" id="minutes" min="0" max="59" value="0">
+                            <label>Minutos</label>
+                        </div>
+                        <div class="time-separator">:</div>
+                        <div class="time-segment">
+                            <input type="number" id="seconds" min="0" max="59" value="0">
+                            <label>Segundos</label>
+                        </div>
+                    </div>
+                    <div class="timer-countdown" style="display: none;">
+                        <div class="time">00:00:00</div>
+                    </div>
+                </div>
+                <div class="timer-controls">
+                    <button id="timer-start" class="control-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button id="timer-pause" class="control-btn" disabled>
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button id="timer-reset" class="control-btn" disabled>
+                        <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+                <div class="timer-presets">
+                    <button class="preset-btn" data-time="60">1 min</button>
+                    <button class="preset-btn" data-time="300">5 min</button>
+                    <button class="preset-btn" data-time="600">10 min</button>
+                    <button class="preset-btn" data-time="1800">30 min</button>
+                </div>
+            </div>
+
+            <!-- Pomodoro -->
+            <div class="view" id="pomodoro-view">
+                <div class="pomodoro-display">
+                    <div class="status">Foco</div>
+                    <div class="time">25:00</div>
+                    <div class="progress-ring">
+                        <svg width="200" height="200">
+                            <circle
+                                class="progress-ring-circle"
+                                stroke-width="8"
+                                stroke="#ddd"
+                                fill="transparent"
+                                r="90"
+                                cx="100"
+                                cy="100"
+                            />
+                            <circle
+                                class="progress-ring-circle-value"
+                                stroke-width="8"
+                                stroke="#FF6347"
+                                fill="transparent"
+                                r="90"
+                                cx="100"
+                                cy="100"
+                            />
+                        </svg>
+                    </div>
+                    <div class="cycle-count">Ciclo: 1/4</div>
+                </div>
+                <div class="pomodoro-controls">
+                    <button id="pomodoro-start" class="control-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button id="pomodoro-pause" class="control-btn" disabled>
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button id="pomodoro-skip" class="control-btn" disabled>
+                        <i class="fas fa-forward"></i>
+                    </button>
+                    <button id="pomodoro-reset" class="control-btn" disabled>
+                        <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+                <div class="pomodoro-settings">
+                    <button id="pomodoro-settings-btn" class="settings-btn">
+                        <i class="fas fa-cog"></i>
+                        Configurações
+                    </button>
+                </div>
+            </div>
+
+            <!-- Calendário -->
+            <div class="view" id="calendar-view">
+                <div class="calendar-header">
+                    <button id="prev-month" class="calendar-nav-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2 id="current-month">Janeiro 2023</h2>
+                    <button id="next-month" class="calendar-nav-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="weekday">Dom</div>
+                    <div class="weekday">Seg</div>
+                    <div class="weekday">Ter</div>
+                    <div class="weekday">Qua</div>
+                    <div class="weekday">Qui</div>
+                    <div class="weekday">Sex</div>
+                    <div class="weekday">Sáb</div>
+                    <!-- Os dias serão gerados dinamicamente -->
+                </div>
+                <div class="calendar-events">
+                    <h3>Eventos do dia <span id="selected-date">01/01/2023</span></h3>
+                    <div id="events-list" class="events-list">
+                        <!-- Eventos serão adicionados dinamicamente -->
+                        <div class="empty-state">
+                            <i class="fas fa-calendar-day"></i>
+                            <p>Nenhum evento para este dia</p>
+                        </div>
+                    </div>
+                    <button id="add-event" class="action-btn">
+                        <i class="fas fa-plus"></i>
+                        Adicionar Evento
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modais -->
+        <div class="modal" id="timezone-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Selecionar Fuso Horário</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <select id="timezone-select">
+                        <!-- Fusos horários serão carregados dinamicamente -->
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-timezone" class="btn btn-primary">Salvar</button>
+                    <button class="btn btn-secondary close-modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="alarm-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Novo Alarme</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="time-input">
+                        <div class="time-segment">
+                            <input type="number" id="alarm-hours" min="0" max="23" value="8">
+                            <label>Horas</label>
+                        </div>
+                        <div class="time-separator">:</div>
+                        <div class="time-segment">
+                            <input type="number" id="alarm-minutes" min="0" max="59" value="0">
+                            <label>Minutos</label>
+                        </div>
+                    </div>
+                    <div class="alarm-options">
+                        <div class="alarm-name">
+                            <label for="alarm-name">Nome</label>
+                            <input type="text" id="alarm-name" placeholder="Alarme">
+                        </div>
+                        <div class="alarm-repeat">
+                            <label>Repetir</label>
+                            <div class="weekdays-select">
+                                <label><input type="checkbox" value="0"> D</label>
+                                <label><input type="checkbox" value="1"> S</label>
+                                <label><input type="checkbox" value="2"> T</label>
+                                <label><input type="checkbox" value="3"> Q</label>
+                                <label><input type="checkbox" value="4"> Q</label>
+                                <label><input type="checkbox" value="5"> S</label>
+                                <label><input type="checkbox" value="6"> S</label>
+                            </div>
+                        </div>
+                        <div class="alarm-sound">
+                            <label for="alarm-sound">Som</label>
+                            <select id="alarm-sound">
+                                <option value="alarm.mp3">Padrão</option>
+                                <option value="gentle.mp3">Suave</option>
+                                <option value="digital.mp3">Digital</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-alarm" class="btn btn-primary">Salvar</button>
+                    <button class="btn btn-secondary close-modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="pomodoro-settings-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Configurações do Pomodoro</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="setting-group">
+                        <label for="focus-time">Tempo de foco (minutos)</label>
+                        <input type="number" id="focus-time" min="1" max="60" value="25">
+                    </div>
+                    <div class="setting-group">
+                        <label for="short-break-time">Pausa curta (minutos)</label>
+                        <input type="number" id="short-break-time" min="1" max="30" value="5">
+                    </div>
+                    <div class="setting-group">
+                        <label for="long-break-time">Pausa longa (minutos)</label>
+                        <input type="number" id="long-break-time" min="1" max="60" value="15">
+                    </div>
+                    <div class="setting-group">
+                        <label for="cycle-count">Ciclos até pausa longa</label>
+                        <input type="number" id="cycle-count" min="1" max="10" value="4">
+                    </div>
+                    <div class="setting-group">
+                        <label for="auto-start-breaks">Iniciar pausas automaticamente</label>
+                        <input type="checkbox" id="auto-start-breaks" checked>
+                    </div>
+                    <div class="setting-group">
+                        <label for="auto-start-pomodoros">Iniciar pomodoros automaticamente</label>
+                        <input type="checkbox" id="auto-start-pomodoros">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-pomodoro-settings" class="btn btn-primary">Salvar</button>
+                    <button class="btn btn-secondary close-modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="event-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Novo Evento</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="event-form">
+                        <div class="form-group">
+                            <label for="event-title">Título</label>
+                            <input type="text" id="event-title" placeholder="Título do evento">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-date">Data</label>
+                            <input type="date" id="event-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-time">Hora</label>
+                            <input type="time" id="event-time">
+                        </div>
+                        <div class="form-group">
+                            <label for="event-description">Descrição</label>
+                            <textarea id="event-description" placeholder="Descrição do evento"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-color">Cor</label>
+                            <input type="color" id="event-color" value="#FF6347">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-event" class="btn btn-primary">Salvar</button>
+                    <button class="btn btn-secondary close-modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notificações -->
+        <div id="notification-container" class="notification-container"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/theme-switcher.js"></script>
+    <script src="js/clock.js"></script>
+    <script src="js/stopwatch.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/alarm.js"></script>
+    <script src="js/pomodoro.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/weather.js"></script>
+    <script src="js/main.js"></script>
+    <!-- O script de inicialização foi movido para main.js -->
+    <!-- Todas as funcionalidades agora são inicializadas automaticamente quando o DOM é carregado -->
+
+</body>
+</html>

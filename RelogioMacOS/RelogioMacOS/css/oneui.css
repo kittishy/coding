@@ -1,0 +1,503 @@
+/* Samsung OneUI Theme Styles */
+:root {
+    /* OneUI Colors - Vibrant & Modern */
+    --oneui-primary: #1a73e8;
+    --oneui-primary-light: #4285f4;
+    --oneui-primary-gradient: linear-gradient(135deg, #1a73e8, #4285f4);
+    --oneui-secondary: #8ab4f8;
+    --oneui-accent: #c2e7ff;
+    --oneui-background: #f8f9fa;
+    --oneui-surface: #ffffff;
+    --oneui-text-primary: #202124;
+    --oneui-text-secondary: #5f6368;
+    --oneui-success: #34c759;
+    --oneui-warning: #ff9500;
+    --oneui-error: #ff3b30;
+    
+    /* Dark Theme Colors - Rich & Contrasty */
+    --oneui-dark-background: #121212;
+    --oneui-dark-surface: #1e1e1e;
+    --oneui-dark-surface-2: #2d2d2d;
+    --oneui-dark-text-primary: #e8eaed;
+    --oneui-dark-text-secondary: #9aa0a6;
+    --oneui-dark-primary: #8ab4f8;
+    --oneui-dark-primary-gradient: linear-gradient(135deg, #8ab4f8, #4285f4);
+    
+    /* Glassmorphism Effects */
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-bg-dark: rgba(30, 30, 30, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-border-dark: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --glass-shadow-dark: 0 8px 32px rgba(0, 0, 0, 0.3);
+    
+    /* Animations & Transitions */
+    --transition-fast: 0.2s;
+    --transition-normal: 0.3s;
+    --transition-slow: 0.5s;
+    
+    /* Spacing & Sizing */
+    --border-radius-sm: 8px;
+    --border-radius-md: 16px;
+    --border-radius-lg: 24px;
+    --border-radius-xl: 32px;
+}
+
+/* OneUI Base Styles */
+body.oneui-theme {
+    background: var(--oneui-background);
+    color: var(--oneui-text-primary);
+    font-family: 'Inter', sans-serif;
+    transition: background-color var(--transition-normal) ease,
+                color var(--transition-normal) ease;
+}
+
+/* Container Styles - Modern & Elegant */
+.oneui-theme .container {
+    background: var(--oneui-surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: var(--border-radius-lg);
+    transition: transform var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow var(--transition-normal) ease;
+    overflow: hidden;
+}
+
+.oneui-theme .container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Titlebar Styles - Sleek & Modern */
+.oneui-theme .titlebar {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    height: 52px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.oneui-theme .titlebar-controls.oneui-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.oneui-theme .titlebar-controls .control {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    transition: all var(--transition-fast) cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.oneui-theme .titlebar-controls .control:hover {
+    transform: scale(1.15);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation Styles - Fluid & Modern */
+.oneui-theme .nav-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 12px;
+    border-radius: var(--border-radius-md);
+    margin: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.oneui-theme .main-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.oneui-theme .nav-btn {
+    border-radius: var(--border-radius-md);
+    padding: 14px 10px;
+    transition: all var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: none;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.oneui-theme .nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--oneui-accent);
+    opacity: 0;
+    border-radius: var(--border-radius-md);
+    transition: opacity var(--transition-normal) ease;
+    z-index: -1;
+}
+
+.oneui-theme .nav-btn:hover {
+    transform: translateY(-2px);
+}
+
+.oneui-theme .nav-btn:hover::before {
+    opacity: 0.3;
+}
+
+.oneui-theme .nav-btn.active {
+    background: var(--oneui-primary-gradient);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+}
+
+.oneui-theme .nav-btn i {
+    font-size: 18px;
+    margin-bottom: 6px;
+    transition: transform var(--transition-normal) ease;
+}
+
+.oneui-theme .nav-btn:hover i {
+    transform: translateY(-2px);
+}
+
+/* Clock Display - Bold & Clear */
+.oneui-theme .clock-display {
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.oneui-theme .time {
+    font-size: 4.5rem;
+    font-weight: 300;
+    background: var(--oneui-primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 10px rgba(26, 115, 232, 0.2);
+    letter-spacing: -1px;
+}
+
+.oneui-theme .milliseconds {
+    color: var(--oneui-text-secondary);
+    font-size: 1.8rem;
+    font-weight: 300;
+    opacity: 0.8;
+}
+
+.oneui-theme .date,
+.oneui-theme .timezone {
+    margin-top: 8px;
+    font-size: 1.1rem;
+    color: var(--oneui-text-secondary);
+}
+
+/* Buttons and Controls - Interactive & Tactile */
+.oneui-theme .option-btn, 
+.oneui-theme .control-btn,
+.oneui-theme .action-btn,
+.oneui-theme .btn-primary,
+.oneui-theme .btn-secondary,
+.oneui-theme .preset-btn {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-md);
+    padding: 12px 24px;
+    color: var(--oneui-text-primary);
+    transition: all var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.oneui-theme .option-btn::before, 
+.oneui-theme .control-btn::before,
+.oneui-theme .action-btn::before,
+.oneui-theme .btn-primary::before,
+.oneui-theme .btn-secondary::before,
+.oneui-theme .preset-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--oneui-accent);
+    opacity: 0;
+    transition: opacity var(--transition-normal) ease;
+    z-index: -1;
+    border-radius: var(--border-radius-md);
+}
+
+.oneui-theme .option-btn:hover, 
+.oneui-theme .control-btn:hover,
+.oneui-theme .action-btn:hover,
+.oneui-theme .btn-primary:hover,
+.oneui-theme .btn-secondary:hover,
+.oneui-theme .preset-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.oneui-theme .option-btn:hover::before, 
+.oneui-theme .control-btn:hover::before,
+.oneui-theme .action-btn:hover::before,
+.oneui-theme .btn-primary:hover::before,
+.oneui-theme .btn-secondary:hover::before,
+.oneui-theme .preset-btn:hover::before {
+    opacity: 0.3;
+}
+
+.oneui-theme .option-btn:active, 
+.oneui-theme .control-btn:active,
+.oneui-theme .action-btn:active,
+.oneui-theme .btn-primary:active,
+.oneui-theme .btn-secondary:active,
+.oneui-theme .preset-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.oneui-theme .btn-primary {
+    background: var(--oneui-primary-gradient);
+    color: white;
+    border: none;
+}
+
+.oneui-theme .action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    margin-top: 16px;
+}
+
+.oneui-theme .action-btn i {
+    font-size: 16px;
+}
+
+/* Dark Theme - Rich & Contrasty */
+body.dark-theme.oneui-theme {
+    background: var(--oneui-dark-background);
+    color: var(--oneui-dark-text-primary);
+}
+
+body.dark-theme.oneui-theme .container {
+    background: var(--oneui-dark-surface);
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme.oneui-theme .titlebar {
+    background: var(--glass-bg-dark);
+    border-color: var(--glass-border-dark);
+}
+
+body.dark-theme.oneui-theme .nav-container {
+    background: var(--glass-bg-dark);
+}
+
+body.dark-theme.oneui-theme .nav-btn:hover::before {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme.oneui-theme .nav-btn.active {
+    background: var(--oneui-dark-primary-gradient);
+}
+
+body.dark-theme.oneui-theme .time {
+    background: var(--oneui-dark-primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 2px 10px rgba(138, 180, 248, 0.3);
+}
+
+/* Modals & Dialogs - Elegant & Focused */
+.oneui-theme .modal {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.oneui-theme .modal-content {
+    background: var(--oneui-surface);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transform-origin: center;
+    animation: modalAppear var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.oneui-theme .modal-header {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 16px 20px;
+}
+
+.oneui-theme .modal-header h3 {
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.oneui-theme .modal-body {
+    padding: 24px 20px;
+}
+
+.oneui-theme .modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* Form Elements - Clean & Interactive */
+.oneui-theme input[type="text"],
+.oneui-theme input[type="number"],
+.oneui-theme input[type="date"],
+.oneui-theme input[type="time"],
+.oneui-theme select,
+.oneui-theme textarea {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-sm);
+    padding: 12px 16px;
+    color: var(--oneui-text-primary);
+    transition: all var(--transition-fast) ease;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.oneui-theme input:focus,
+.oneui-theme select:focus,
+.oneui-theme textarea:focus {
+    outline: none;
+    border-color: var(--oneui-primary);
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+}
+
+.oneui-theme .form-group {
+    margin-bottom: 16px;
+}
+
+.oneui-theme label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--oneui-text-secondary);
+}
+
+/* Notifications - Subtle & Informative */
+.oneui-theme .notification-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+}
+
+.oneui-theme .notification {
+    background: var(--oneui-surface);
+    border-left: 4px solid var(--oneui-primary);
+    border-radius: var(--border-radius-md);
+    padding: 16px;
+    margin-top: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: notificationSlideIn var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Dark Theme Adjustments for Modals & Forms */
+body.dark-theme.oneui-theme .modal-content {
+    background: var(--oneui-dark-surface);
+    border-color: var(--glass-border-dark);
+}
+
+body.dark-theme.oneui-theme .modal-header {
+    background: var(--glass-bg-dark);
+    border-color: var(--glass-border-dark);
+}
+
+body.dark-theme.oneui-theme input,
+body.dark-theme.oneui-theme select,
+body.dark-theme.oneui-theme textarea {
+    background: var(--oneui-dark-surface-2);
+    border-color: var(--glass-border-dark);
+    color: var(--oneui-dark-text-primary);
+}
+
+body.dark-theme.oneui-theme input:focus,
+body.dark-theme.oneui-theme select:focus,
+body.dark-theme.oneui-theme textarea:focus {
+    border-color: var(--oneui-dark-primary);
+    box-shadow: 0 0 0 3px rgba(138, 180, 248, 0.2);
+}
+
+/* Enhanced Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes modalAppear {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes notificationSlideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.oneui-theme .view {
+    animation: fadeIn var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.oneui-theme .nav-btn i {
+    animation: scaleIn var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Additional Components */
+.oneui-theme .progress-ring-circle-value {
+    transition: stroke-dashoffset var(--transition-normal) ease;
+    transform-origin: center;
+    transform: rotate(-90deg);
+}
+
+.oneui-theme .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: var(--oneui-text-secondary);
+    opacity: 0.7;
+}
+
+.oneui-theme .empty-state i {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
