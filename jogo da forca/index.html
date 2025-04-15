@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Forca Moderno</title>
+    <link rel="stylesheet" href="css/modern-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Jogo da Forca</h1>
+            <div class="header-buttons">
+                <button id="btn-admin" class="btn"><i class="fas fa-cog"></i> Personalizar Jogo</button>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="language-toggle" class="language-toggle" aria-label="Selecionar idioma">
+                    <i class="fas fa-globe"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div id="game-container" class="active">
+                <div class="game-info">
+                    <div class="hangman-container">
+                        <svg height="250" width="200" class="hangman-draw">
+                            <!-- Base -->
+                            <line x1="50" y1="20" x2="130" y2="20" class="hangman-part"></line>
+                            <line x1="130" y1="20" x2="130" y2="50" class="hangman-part"></line>
+                            <line x1="50" y1="20" x2="50" y2="250" class="hangman-part"></line>
+                            <line x1="10" y1="250" x2="90" y2="250" class="hangman-part"></line>
+                            
+                            <!-- Cabeça -->
+                            <circle cx="130" cy="70" r="20" class="hangman-part hidden" id="head"></circle>
+                            
+                            <!-- Corpo -->
+                            <line x1="130" y1="90" x2="130" y2="170" class="hangman-part hidden" id="body"></line>
+                            
+                            <!-- Braços -->
+                            <line x1="130" y1="120" x2="100" y2="100" class="hangman-part hidden" id="left-arm"></line>
+                            <line x1="130" y1="120" x2="160" y2="100" class="hangman-part hidden" id="right-arm"></line>
+                            
+                            <!-- Pernas -->
+                            <line x1="130" y1="170" x2="100" y2="210" class="hangman-part hidden" id="left-leg"></line>
+                            <line x1="130" y1="170" x2="160" y2="210" class="hangman-part hidden" id="right-leg"></line>
+                        </svg>
+                    </div>
+                    <div class="game-status">
+                        <div class="hint-container">
+                            <h3>Dica:</h3>
+                            <p id="hint">Carregando...</p>
+                        </div>
+                        <div class="wrong-letters-container">
+                            <h3>Letras erradas:</h3>
+                            <div id="wrong-letters"></div>
+                        </div>
+                        <div class="attempts-container">
+                            <h3>Tentativas restantes:</h3>
+                            <p id="attempts">6</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="word-container">
+                    <div id="word" class="word"></div>
+                </div>
+
+                <div class="keyboard">
+                    <div class="keyboard-row">
+                        <button class="key">A</button>
+                        <button class="key">B</button>
+                        <button class="key">C</button>
+                        <button class="key">D</button>
+                        <button class="key">E</button>
+                        <button class="key">F</button>
+                        <button class="key">G</button>
+                        <button class="key">H</button>
+                        <button class="key">I</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key">J</button>
+                        <button class="key">K</button>
+                        <button class="key">L</button>
+                        <button class="key">M</button>
+                        <button class="key">N</button>
+                        <button class="key">O</button>
+                        <button class="key">P</button>
+                        <button class="key">Q</button>
+                        <button class="key">R</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key">S</button>
+                        <button class="key">T</button>
+                        <button class="key">U</button>
+                        <button class="key">V</button>
+                        <button class="key">W</button>
+                        <button class="key">X</button>
+                        <button class="key">Y</button>
+                        <button class="key">Z</button>
+                    </div>
+                </div>
+
+                <button id="btn-new-game" class="btn"><i class="fas fa-sync-alt"></i> Novo Jogo</button>
+            </div>
+
+            <div id="admin-container">
+                <h2>Personalizar Palavras</h2>
+                <div class="admin-form">
+                    <div class="form-group">
+                        <label for="new-word">Nova Palavra:</label>
+                        <input type="text" id="new-word" placeholder="Digite uma palavra" maxlength="15">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-hint">Dica:</label>
+                        <input type="text" id="new-hint" placeholder="Digite uma dica para a palavra" maxlength="50">
+                    </div>
+                    <button id="btn-add-word" class="btn"><i class="fas fa-plus"></i> Adicionar</button>
+                </div>
+
+                <div class="word-list-container">
+                    <h3>Palavras Cadastradas</h3>
+                    <div class="word-list-header">
+                        <span class="word-header">Palavra</span>
+                        <span class="hint-header">Dica</span>
+                        <span class="action-header">Ações</span>
+                    </div>
+                    <div id="word-list" class="word-list">
+                        <!-- Lista de palavras será preenchida pelo JavaScript -->
+                    </div>
+                </div>
+
+                <button id="btn-back" class="btn"><i class="fas fa-arrow-left"></i> Voltar ao Jogo</button>
+            </div>
+        </main>
+
+        <div id="notification" class="notification">
+            <p id="notification-message"></p>
+        </div>
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <h2 id="modal-title">Título</h2>
+                <p id="modal-message">Mensagem</p>
+                <button id="modal-button" class="btn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Jogo da Forca Moderno &copy; 2025</p>
+    </footer>
+
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>
