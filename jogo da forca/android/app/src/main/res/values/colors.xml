@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#0071e3</color>
+    <color name="primary_dark">#005bb8</color>
+    <color name="accent">#5ac8fa</color>
+    <color name="accent_dark">#4096c7</color>
+    <color name="background">#f5f7fa</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    
+    <!-- Cores do tema escuro -->
+    <color name="dark_background">#1d1d1f</color>
+    <color name="dark_surface">#2c2c2e</color>
+    <color name="dark_primary">#0a84ff</color>
+    <color name="dark_accent">#64d2ff</color>
+</resources>
