@@ -1,3 +1,7 @@
+// Importar funções de tradução e palavras
+import { getTranslations, getAvailableLanguages } from './translations.js';
+import { getWordsByLanguage, addWordToLanguage, removeWordFromLanguage, updateWordInLanguage, saveWordsToLocalStorage, loadWordsFromLocalStorage } from './words.js';
+
 // Elementos do DOM
 const gameContainer = document.getElementById('game-container');
 const adminContainer = document.getElementById('admin-container');
@@ -43,10 +47,11 @@ let correctLetters = [];
 let wrongLetters = [];
 let maxAttempts = 6;
 let gameOver = false;
+let currentLanguage = localStorage.getItem('hangmanLanguage') || 'pt-br';
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
-    loadWordsFromLocalStorage();
+    initializeWords();
     loadThemePreference();
     loadLanguagePreference();
     setupEventListeners();
@@ -88,6 +93,14 @@ function toggleLanguageMenu() {
     
     if (menu.classList.contains('active')) {
         renderLanguageMenu();
+        
+        // Posicionar o menu corretamente em relação ao botão
+        const buttonRect = languageToggle.getBoundingClientRect();
+        menu.style.top = (buttonRect.bottom + 5) + 'px';
+        menu.style.right = (window.innerWidth - buttonRect.right) + 'px';
+    } else {
+        // Fechar o menu quando clicado novamente
+        menu.classList.remove('active');
     }
 }
 
@@ -121,7 +134,23 @@ function renderLanguageMenu() {
 function changeLanguage(lang) {
     document.documentElement.lang = lang;
     localStorage.setItem('hangmanLanguage', lang);
+    currentLanguage = lang;
+    
+    // Atualizar palavras para o novo idioma
+    words = getWordsByLanguage(currentLanguage);
+    
+    // Atualizar interface
     updateInterfaceLanguage(lang);
+    
+    // Se estiver na tela de administração, atualizar a lista de palavras
+    if (adminContainer.classList.contains('active')) {
+        renderWordList();
+    }
+    
+    // Se estiver no jogo, reiniciar com uma palavra no novo idioma
+    if (gameContainer.classList.contains('active')) {
+        startNewGame();
+    }
 }
 
 // Função para atualizar interface com novo idioma
@@ -130,6 +159,7 @@ function updateInterfaceLanguage(lang) {
     
     // Atualizar textos estáticos
     document.querySelector('title').textContent = t.gameTitle;
+    document.querySelector('h1').textContent = t.gameTitle;
     btnAdmin.textContent = t.customizeGame;
     btnNewGame.textContent = t.newGame;
     btnAddWord.textContent = t.addWord;
@@ -140,8 +170,20 @@ function updateInterfaceLanguage(lang) {
     newHintInput.placeholder = t.hintPlaceholder;
     
     // Atualizar elementos dinâmicos
+    if (document.querySelector('.hint-container h3')) document.querySelector('.hint-container h3').textContent = t.hint;
+    if (document.querySelector('.wrong-letters-container h3')) document.querySelector('.wrong-letters-container h3').textContent = t.wrongLetters || 'Letras erradas:';
+    if (document.querySelector('.attempts-container h3')) document.querySelector('.attempts-container h3').textContent = t.attemptsLeft || 'Tentativas restantes:';
+    
+    // Atualizar conteúdo dinâmico
     if (hintElement) hintElement.textContent = selectedHint;
     if (attemptsElement) attemptsElement.textContent = maxAttempts - wrongLetters.length;
+    
+    // Atualizar textos da área de administração
+    if (document.querySelector('#admin-container h2')) document.querySelector('#admin-container h2').textContent = t.customizeGame;
+    if (document.querySelector('.word-list-container h3')) document.querySelector('.word-list-container h3').textContent = t.registeredWords || 'Palavras Cadastradas';
+    
+    // Atualizar footer
+    if (document.querySelector('footer p')) document.querySelector('footer p').textContent = t.gameTitle + ' © ' + new Date().getFullYear();
 }
 
 // Atualizar ícone do botão de tema
@@ -157,26 +199,12 @@ function updateThemeIcon(theme) {
 }
 
 // Funções de inicialização
-function loadWordsFromLocalStorage() {
-    const storedWords = localStorage.getItem('hangmanWords');
-    if (storedWords) {
-        words = JSON.parse(storedWords);
-    } else {
-        // Palavras padrão caso não haja palavras salvas
-        words = [
-            { word: 'JAVASCRIPT', hint: 'Linguagem de programação para web' },
-            { word: 'BRASIL', hint: 'País da América do Sul' },
-            { word: 'ELEFANTE', hint: 'Animal de grande porte com tromba' },
-            { word: 'GUITARRA', hint: 'Instrumento musical de cordas' },
-            { word: 'CHOCOLATE', hint: 'Doce feito de cacau' },
-            { word: 'PYTHON', hint: 'Linguagem de programação para IA' },
-            { word: 'AMAZONIA', hint: 'Maior bioma brasileiro' },
-            { word: 'PIANO', hint: 'Instrumento musical de teclas' },
-            { word: 'ABACAXI', hint: 'Fruta tropical doce' },
-            { word: 'FUTEBOL', hint: 'Esporte mais popular do Brasil' }
-        ];
-        saveWordsToLocalStorage();
-    }
+function initializeWords() {
+    // Carregar palavras do localStorage usando a função importada do módulo words.js
+    loadWordsFromLocalStorage();
+    
+    // Usar as palavras do idioma atual
+    words = getWordsByLanguage(currentLanguage);
 }
 
 function setupEventListeners() {
@@ -240,8 +268,13 @@ function showAdminScreen() {
 
 // Funções do jogo
 function startNewGame() {
+    // Garantir que estamos usando as palavras do idioma atual
+    words = getWordsByLanguage(currentLanguage);
+    
+    const t = getTranslations(currentLanguage);
+    
     if (words.length === 0) {
-        showModal('Sem palavras', 'Não há palavras cadastradas. Adicione palavras na área de administração.', 'Entendi');
+        showModal('noWords', 'noWords', 'understood');
         return;
     }
     
@@ -265,8 +298,10 @@ function startNewGame() {
 }
 
 function handleGuess(letter) {
+    const t = getTranslations(currentLanguage);
+    
     if (correctLetters.includes(letter) || wrongLetters.includes(letter)) {
-        showNotification('Você já tentou esta letra!', true);
+        showNotification(t.letterAlreadyTried, true);
         return;
     }
     
@@ -281,7 +316,7 @@ function handleGuess(letter) {
         
         if (wordLetters.every(letter => correctLetters.includes(letter))) {
             gameOver = true;
-            showModal('Parabéns!', `Você venceu! A palavra era: ${selectedWord}`, 'Novo Jogo');
+            showModal('congratulations', `${t.youWon} ${selectedWord}`, 'newGame');
         }
     } else {
         wrongLetters.push(letter);
@@ -291,7 +326,7 @@ function handleGuess(letter) {
         // Verificar derrota
         if (wrongLetters.length >= maxAttempts) {
             gameOver = true;
-            showModal('Que pena!', `Você perdeu! A palavra era: ${selectedWord}`, 'Tentar Novamente');
+            showModal('gameOver', `${t.youLost} ${selectedWord}`, 'tryAgain');
         }
     }
     
@@ -361,19 +396,20 @@ let editingIndex = -1;
 function addNewWord() {
     const word = newWordInput.value.trim().toUpperCase();
     const hint = newHintInput.value.trim();
+    const t = getTranslations(currentLanguage);
     
     if (word === '' || hint === '') {
-        showNotification('Preencha todos os campos!', true);
+        showNotification(t.wordRequired, true);
         return;
     }
     
     if (word.length < 3) {
-        showNotification('A palavra deve ter pelo menos 3 letras!', true);
+        showNotification(t.minLetters, true);
         return;
     }
     
     if (!/^[A-ZÀ-ÖØ-Þ]+$/.test(word)) {
-        showNotification('A palavra deve conter apenas letras!', true);
+        showNotification(t.lettersOnly, true);
         return;
     }
     
@@ -381,17 +417,21 @@ function addNewWord() {
     const isEditing = editingIndex > -1;
     
     if (words.some((item, index) => item.word.toUpperCase() === word && index !== editingIndex)) {
-        showNotification('Esta palavra já está cadastrada!', true);
+        showNotification(t.wordExists, true);
         return;
     }
     
     // Adicionar/Editar palavra
     if (isEditing) {
-        words[editingIndex] = { word, hint };
+        // Atualizar palavra no idioma atual
+        updateWordInLanguage(currentLanguage, editingIndex, word, hint);
+        words = getWordsByLanguage(currentLanguage);
         editingIndex = -1;
-    btnAddWord.textContent = 'Adicionar Palavra';
+        btnAddWord.textContent = t.addWord;
     } else {
-        words.push({ word, hint });
+        // Adicionar palavra no idioma atual
+        addWordToLanguage(currentLanguage, word, hint);
+        words = getWordsByLanguage(currentLanguage);
     }
     saveWordsToLocalStorage();
     renderWordList();
@@ -400,7 +440,7 @@ function addNewWord() {
     newWordInput.value = '';
     newHintInput.value = '';
     
-    showNotification('Palavra adicionada com sucesso!');
+    showNotification(t.wordAdded);
 }
 
 function startEditWord(index) {
@@ -408,22 +448,27 @@ function startEditWord(index) {
     const wordObj = words[index];
     newWordInput.value = wordObj.word;
     newHintInput.value = wordObj.hint;
-    btnAddWord.textContent = 'Atualizar Palavra';
+    const t = getTranslations(currentLanguage);
+    btnAddWord.textContent = t.updateWord;
 }
 
 function deleteWord(index) {
-    words.splice(index, 1);
+    // Remover palavra do idioma atual
+    removeWordFromLanguage(currentLanguage, index);
+    words = getWordsByLanguage(currentLanguage);
     saveWordsToLocalStorage();
     renderWordList();
-    showNotification('Palavra removida com sucesso!');
+    const t = getTranslations(currentLanguage);
+    showNotification(t.wordRemoved);
 }
 
 function renderWordList() {
     wordList.innerHTML = '';
+    const t = getTranslations(currentLanguage);
     
     if (words.length === 0) {
         const emptyMessage = document.createElement('div');
-        emptyMessage.textContent = 'Nenhuma palavra cadastrada.';
+        emptyMessage.textContent = t.emptyWordList;
         emptyMessage.style.padding = '15px 0';
         emptyMessage.style.textAlign = 'center';
         emptyMessage.style.color = '#666';
@@ -466,8 +511,9 @@ function renderWordList() {
     });
 }
 
-function saveWordsToLocalStorage() {
-    localStorage.setItem('hangmanWords', JSON.stringify(words));
+function saveWords() {
+    // Usar a função do arquivo words.js para salvar as palavras
+    saveWordsToLocalStorage();
 }
 
 // Funções de UI
@@ -487,6 +533,14 @@ function showNotification(message, isError = false) {
 }
 
 function showModal(title, message, buttonText) {
+    // Usar traduções do idioma atual
+    const t = getTranslations(currentLanguage);
+    
+    // Verificar se os textos são chaves de tradução
+    if (t[title]) title = t[title];
+    if (t[message]) message = t[message];
+    if (t[buttonText]) buttonText = t[buttonText];
+    
     modalTitle.textContent = title;
     modalMessage.textContent = message;
     modalButton.textContent = buttonText;
