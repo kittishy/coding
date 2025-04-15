@@ -1,0 +1,223 @@
+/* Resetting default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 95%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dark-mode .login-container {
+    background-color: #444;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+    transition: color 0.3s ease;
+}
+
+.dark-mode h1 {
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.dark-mode label {
+    color: #ddd;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1.5px solid #ddd;
+    font-size: 16px;
+    -webkit-appearance: none; /* Remove os estilos padrão do sistema */
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #4CAF50; /* Cor de destaque para foco */
+}
+
+.dark-mode input[type="text"],
+.dark-mode input[type="password"] {
+    background-color: #555;
+    color: #eee;
+    border-color: #666;
+}
+
+.button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.button:hover {
+    background-color: #45a049;
+    transform: scale(1.02);
+}
+
+.dark-mode .button {
+    background-color: #66BB6A;
+}
+
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+    gap: 10px; /* Espaçamento entre os elementos */
+}
+
+.options select, .options .button {
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    font-size: 16px;
+    font-weight: 500;
+    flex: 1;
+    text-align: center;
+}
+
+.options select {
+    background-color: #f8f8f8;
+    color: #555;
+    -webkit-appearance: none; /* Remove a aparência padrão do select no Safari */
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.dark-mode .options select {
+    background-color: #555;
+    color: #ddd;
+    border-color: #777;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ddd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+.options select:hover {
+    background-color: #e0e0e0;
+}
+
+.dark-mode .options select:hover {
+    background-color: #666;
+}
+
+.link-button {
+    background-color: transparent;
+    color: #4CAF50;
+    padding: 10px 15px;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.link-button:hover {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.dark-mode .link-button {
+    color: #66BB6A;
+    border-color: #66BB6A;
+}
+
+.dark-mode .link-button:hover {
+    background-color: #66BB6A;
+    color: #333;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .options select, .options .button {
+        margin-bottom: 10px;
+    }
+
+
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

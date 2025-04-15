@@ -1,0 +1,776 @@
+/* Estilos Modernos para o Jogo da Forca - Inspirado em Apple e Samsung */
+
+:root {
+    /* Variáveis de cores - Modo Claro */
+    --bg-primary: #f5f7fa;
+    --bg-secondary: #ffffff;
+    --text-primary: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --accent-primary: #0071e3;
+    --accent-secondary: #5ac8fa;
+    --border-color: #d2d2d7;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --keyboard-bg: #f5f5f7;
+    --key-bg: #ffffff;
+    --key-border: #e5e5e5;
+    --key-text: #1d1d1f;
+    --key-correct: #34c759;
+    --key-wrong: #ff3b30;
+    --hangman-color: #8e8e93;
+    --notification-bg: rgba(255, 255, 255, 0.95);
+    --modal-bg: rgba(255, 255, 255, 0.98);
+}
+
+/* Modo Escuro */
+[data-theme="dark"] {
+    --bg-primary: #1d1d1f;
+    --bg-secondary: #2c2c2e;
+    --text-primary: #f5f5f7;
+    --text-secondary: #aeaeb2;
+    --accent-primary: #0a84ff;
+    --accent-secondary: #64d2ff;
+    --border-color: #3a3a3c;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --keyboard-bg: #2c2c2e;
+    --key-bg: #3a3a3c;
+    --key-border: #4e4e50;
+    --key-text: #f5f5f7;
+    --key-correct: #30d158;
+    --key-wrong: #ff453a;
+    --hangman-color: #aeaeb2;
+    --notification-bg: rgba(44, 44, 46, 0.95);
+    --modal-bg: rgba(44, 44, 46, 0.98);
+}
+
+/* Estilos Gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    background-color: var(--bg-secondary);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px var(--shadow-color);
+    width: 100%;
+    max-width: 900px;
+    padding: 25px;
+    margin: 20px auto;
+    overflow-x: hidden;
+    border: 1px solid var(--border-color);
+    position: relative;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Header e Navegação */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    position: relative;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h1 {
+    color: var(--text-primary);
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    transition: color 0.3s ease;
+}
+
+h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    transition: color 0.3s ease;
+}
+
+h3 {
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    transition: color 0.3s ease;
+}
+
+/* Botões */
+.btn {
+    background-color: var(--accent-primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 113, 227, 0.2);
+    margin: 5px 0;
+    min-width: 120px;
+    text-align: center;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+    background-color: var(--accent-secondary);
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+/* Toggle de Tema */
+.theme-toggle, .language-toggle {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+}
+
+.language-toggle:hover, .theme-toggle:hover {
+    color: var(--accent-primary);
+    transform: rotate(15deg);
+}
+
+.language-menu {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    z-index: 100;
+    display: none;
+}
+
+.language-menu.active {
+    display: block;
+}
+
+.language-option {
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.language-option:hover {
+    background: var(--bg-primary);
+}
+
+/* Estilos do Jogo */
+#game-container, #admin-container {
+    display: none;
+}
+
+#game-container.active, #admin-container.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.hangman-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-primary);
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: inset 0 0 8px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.hangman-draw {
+    max-width: 100%;
+}
+
+.hangman-part {
+    stroke: var(--hangman-color);
+    stroke-width: 2.5;
+    fill: transparent;
+    transition: stroke 0.3s ease;
+}
+
+.hangman-part.hidden {
+    display: none;
+}
+
+.game-status {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-primary);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: inset 0 0 8px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.hint-container, .wrong-letters-container, .attempts-container {
+    margin-bottom: 15px;
+}
+
+#hint, #attempts {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+#wrong-letters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.wrong-letter {
+    background-color: var(--key-wrong);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    animation: popIn 0.3s ease;
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.word-container {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+    width: 100%;
+}
+
+.word {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.letter {
+    width: 40px;
+    height: 50px;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    color: var(--text-primary);
+}
+
+.letter.visible {
+    animation: revealLetter 0.5s ease;
+}
+
+.letter.correct {
+    color: var(--key-correct);
+}
+
+/* Teclado */
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.key {
+    width: 40px;
+    height: 40px;
+    background-color: var(--key-bg);
+    border: 1px solid var(--key-border);
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--key-text);
+    box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.key:hover {
+    background-color: var(--accent-primary);
+    transform: translateY(-2px);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+.key.correct {
+    background-color: var(--key-correct);
+    color: white;
+    border-color: var(--key-correct);
+}
+
+.key.wrong {
+    background-color: var(--key-wrong);
+    color: white;
+    border-color: var(--key-wrong);
+}
+
+.key.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Estilos da Administração */
+.admin-form {
+    background-color: var(--bg-primary);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 6px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    position: relative;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
+}
+
+/* Lista de Palavras */
+.word-list-container {
+    background-color: var(--bg-primary);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 6px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.word-list-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 80px;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: color 0.3s ease, border-color 0.3s ease;
+    overflow-x: hidden;
+    width: calc(100% - 1px);
+}
+
+.word-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.word-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr 80px;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    align-items: center;
+    transition: border-color 0.3s ease;
+}
+
+.word-text, .hint-text {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.btn-edit {
+    background-color: #2d98da;
+    margin-right: 8px;
+}
+
+.word-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-edit, .btn-delete {
+    min-width: auto;
+    padding: 8px 12px;
+}
+
+.btn-edit {
+    background-color: var(--accent-primary);
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    box-shadow: 0 2px 6px rgba(0, 113, 227, 0.2);
+}
+
+.btn-edit:hover {
+    background-color: #45aaf2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 113, 227, 0.3);
+}
+
+.btn-delete {
+    background-color: var(--key-wrong);
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    box-shadow: 0 2px 6px rgba(255, 69, 58, 0.2);
+}
+
+.btn-delete:hover {
+    transform: translateY(-2px);
+    background-color: #ff453a;
+    box-shadow: 0 4px 8px rgba(255, 69, 58, 0.3);
+}
+
+/* Notificação e Modal */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: var(--notification-bg);
+    color: var(--text-primary);
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    -webkit-backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);    backdrop-filter: blur(10px);    border: 1px solid var(--border-color);
+}
+
+.notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.notification.error {
+    background-color: var(--key-wrong);
+    color: white;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--modal-bg);
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+    -webkit-backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+#modal-title {
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+#modal-message {
+    margin-bottom: 25px;
+    color: var(--text-secondary);
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    width: 100%;
+    padding: 15px 0;
+    transition: color 0.3s ease;
+}
+
+/* Botões de ação */
+#btn-new-game, #btn-back {
+    margin: 20px auto;
+    min-width: 180px;
+}
+
+/* Animações */
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+    70% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes revealLetter {
+    0% {
+        transform: rotateY(90deg);
+    }
+    100% {
+        transform: rotateY(0);
+    }
+}
+
+/* Alinhamento de botões específicos */
+.admin-form .form-group {
+    width: 100%;
+    max-width: 500px;
+}
+
+.admin-form #btn-add-word {
+    align-self: flex-start;
+    margin-top: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+        max-width: 95%;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .game-info {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .hangman-container, .game-status {
+        min-height: 220px;
+        width: 100%;
+    }
+
+    .letter {
+        width: 30px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    .key {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .word-list-header, .word-item {
+        grid-template-columns: 1fr 1.5fr 80px;
+        gap: 10px;
+    }
+    
+    .theme-toggle {
+        top: 15px;
+        right: 15px;
+    }
+
+    header {
+        margin-top: 15px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    #btn-admin {
+        margin: 10px auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+        margin: 5px;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        margin-top: 20px;
+    }
+
+    .letter {
+        width: 25px;
+        height: 35px;
+        font-size: 1.2rem;
+        margin: 0 2px;
+    }
+
+    .keyboard-row {
+        gap: 5px;
+    }
+
+    .key {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+
+    .word-list-header, .word-item {
+        grid-template-columns: 1fr 1fr 70px;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .hangman-container svg {
+        max-width: 90%;
+        height: auto;
+    }
+    
+    .game-status {
+        padding: 15px;
+    }
+    
+    .word {
+        gap: 5px;
+    }
+}

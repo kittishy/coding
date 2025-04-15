@@ -1,0 +1,219 @@
+/* Basic reset and general styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.dark-mode body {
+    background-color: #333;
+    color: #f4f4f4;
+}
+
+/* Container */
+.container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 90%;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dark-mode .container {
+    background-color: #222;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+/* Title */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-top: 5px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #50a7f0;
+    outline: none;
+}
+
+/* Buttons */
+button, .create-account {
+    background-color: #50a7f0;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+.create-account {
+    background-color: transparent;
+    color: #50a7f0;
+    border: 1px solid #50a7f0;
+    margin-top: 10px;
+}
+
+button:hover,
+.create-account:hover {
+    background-color: #3282bf;
+}
+
+.dark-mode button,
+.dark-mode .create-account {
+    background-color: #77c3f0;
+    color: #222;
+}
+
+.dark-mode button:hover,
+.dark-mode .create-account:hover {
+    background-color: #5da9d7;
+}
+
+/* Selects and theme button */
+.options {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+select, #theme-toggle {
+    background-color: #f4f4f4;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode select, .dark-mode #theme-toggle {
+    background-color: #222;
+    color: #f4f4f4;
+    border-color: #555;
+}
+
+#theme-toggle {
+    background-color: #50a7f0;
+    color: white;
+    border: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+        width: 95%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    label,
+    input[type="text"],
+    input[type="password"],
+    button, .create-account, select, #theme-toggle {
+        font-size: 0.9rem;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        padding: 10px;
+    }
+
+    button, .create-account, select, #theme-toggle {
+        padding: 10px 15px;
+    }
+
+    .options {
+        flex-direction: column;
+    }
+
+    select, #theme-toggle {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Adjustments for landscape mode */
+@media (max-width: 800px) and (orientation: landscape) {
+    .container {
+        flex-direction: row;
+        max-width: 95%;
+    }
+
+    form {
+        width: 50%;
+        padding-right: 20px;
+    }
+
+    .options {
+        flex-direction: column;
+        width: 50%;
+    }
+}
